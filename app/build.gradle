@@ -60,3 +60,4 @@ task versionName {
     doLast {
       print android.defaultConfig.versionName
     }
+}
