@@ -2,18 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion project.properties.compileSdkVersion.toInteger()
-    def appVersionName = System.getenv("TERMUX_API_APP_VERSION_NAME") ?: ""
-    def apkVersionTag = System.getenv("TERMUX_API_APK_VERSION_TAG") ?: ""
-
+    
     defaultConfig {
         applicationId "com.termux.api"
         minSdkVersion project.properties.minSdkVersion.toInteger()
         targetSdkVersion project.properties.targetSdkVersion.toInteger()
         versionCode 49
-        versionName "0.49.0"
+        versionName "0.49"
 
-        if (appVersionName) versionName = appVersionName
-        validateVersionName(versionName)
+        
 
         manifestPlaceholders.TERMUX_PACKAGE_NAME = "com.termux"
         manifestPlaceholders.TERMUX_APP_NAME = "Termux"
@@ -46,15 +43,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            if (variant.buildType.name == "debug") {
-                outputFileName = new File("termux-api_" + (apkVersionTag ? apkVersionTag : "debug") + ".apk")
-            } else if (variant.buildType.name == "release") {
-                outputFileName = new File("termux-api_" + (apkVersionTag ? apkVersionTag : "release") + ".apk")
-            }
-        }
-    }
 
     lintOptions {
         disable 'ExpiredTargetSdkVersion'
@@ -70,6 +58,5 @@ dependencies {
 
 task versionName {
     doLast {
-        print android.defaultConfig.versionName
+      print android.defaultConfig.versionName
     }
-}
